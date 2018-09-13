@@ -3,10 +3,10 @@
 set -e
 
 # Set the environment variables.
-cat > ~/.bash_profile << EOF
+cat << EOT >> ~/.bash_profile
 export APP_ENV=production
 export APP_ROLE=scheduler
-EOF
+EOT
 
 # Update the server
 yum -y update

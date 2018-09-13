@@ -2,12 +2,6 @@
 
 set -e
 
-# Set the environment variables.
-cat << EOT >> /home/ec2-user/.bash_profile
-export APP_ENV=production
-export APP_ROLE=scheduler
-EOT
-
 # Update the server
 yum -y update
 yum -y upgrade
@@ -155,5 +149,10 @@ cd /tmp
 curl -O https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
 pip install awscli --upgrade
+
+# Add the scheduler to the CRON.
+cd /tmp
+curl -O https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/scheduler/laravel-scheduler
+sudo mv laravel-scheduler /etc/cron.d/laravel-scheduler
 
 echo "Boot script complete"

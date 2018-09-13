@@ -2,12 +2,6 @@
 
 set -e
 
-# Set the environment variables.
-cat << EOT >> /home/ec2-user/.bash_profile
-export APP_ENV=production
-export APP_ROLE=api
-EOT
-
 # Update the server
 yum -y update
 yum -y upgrade

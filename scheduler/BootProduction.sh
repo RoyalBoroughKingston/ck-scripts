@@ -152,7 +152,7 @@ pip install awscli --upgrade
 
 # Add the scheduler to the CRON.
 cd /tmp
-curl -O https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/scheduler/laravel-scheduler
+curl -O https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/scheduler/laravel-scheduler
 sudo mv laravel-scheduler /etc/cron.d/laravel-scheduler
 
 echo "Boot script complete"

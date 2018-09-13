@@ -3,7 +3,7 @@
 set -e
 
 # Set the environment variables.
-cat << EOT >> ~/.bash_profile
+cat << EOT >> /home/ec2-user/.bash_profile
 export APP_ENV=production
 export APP_ROLE=scheduler
 EOT

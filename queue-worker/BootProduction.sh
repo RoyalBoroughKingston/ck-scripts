@@ -154,16 +154,26 @@ pip install awscli --upgrade
 cd /tmp
 sudo pip install supervisor
 
-# Set the config for supervisor.
-echo_supervisord_conf | sudo tee /etc/supervisord.conf
-curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/laravel-worker.conf | sudo tee -a /etc/supervisord.conf
+# Create the supervisor configuration file.
+mkdir -p /etc/supervisor/conf.d
+echo_supervisord_conf | sudo tee /etc/supervisor/supervisord.conf
+sudo tee -a /etc/supervisor/supervisord.conf << EOF
+[include]
+files = /etc/supervisor/conf.d/*.conf
+EOF
 
-# Set the startup script for supervisor.
-curl -o supervisord https://raw.githubusercontent.com/Supervisor/initscripts/master/redhat-init-equeffelec
-chmod 755 supervisord
-sudo chown root.root supervisord
-sudo mv supervisord /etc/init.d
-sudo /etc/init.d/supervisord start
+# Create the supervisor configuration file for the Laravel queue worker.
+curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/laravel-worker.conf | sudo tee /etc/supervisor/conf.d/laravel-worker.conf
+
+# Create the supervisor startup script.
+curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/supervisord | sudo tee /etc/init.d/supervisord
+sudo chmod a+x /etc/init.d/supervisord
+sudo kill $(pgrep supervisor) 2> /dev/null
+
+# Start supervisor.
+sudo service supervisord start
+
+# Add supervisor to autostart.
 sudo chkconfig --add supervisord
 sudo chkconfig supervisord on
 

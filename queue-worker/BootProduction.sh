@@ -150,16 +150,19 @@ curl -O https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
 pip install awscli --upgrade
 
-# Install and start supervisor.
+# Install supervisor.
 cd /tmp
 sudo pip install supervisor
-curl -O https://raw.githubusercontent.com/Supervisor/initscripts/master/redhat-init-mingalevme
-sed -e "s/^PREFIX=\/usr$/PREFIX=\/usr\/local/" redhat-init-mingalevme > supervisord
+
+# Set the config for supervisor.
+echo_supervisord_conf | sudo tee /etc/supervisord.conf
+curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/laravel-worker.conf | sudo tee -a /etc/supervisord.conf
+
+# Set the startup script for supervisor.
+curl -O https://raw.githubusercontent.com/Supervisor/initscripts/master/redhat-init-equeffelec
 chmod 755 supervisord
 sudo chown root.root supervisord
 sudo mv supervisord /etc/init.d
-echo_supervisord_conf | sudo tee /etc/supervisord.conf
-curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/laravel-worker.conf | sudo tee -a /etc/supervisord.conf
 sudo /etc/init.d/supervisord start
 sudo chkconfig --add supervisord
 sudo chkconfig supervisord on

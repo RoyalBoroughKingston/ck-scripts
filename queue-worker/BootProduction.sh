@@ -2,6 +2,12 @@
 
 set -e
 
+# Set the environment varis.
+sudo tee -a /home/ec2-user/.bash_profile << EOF
+export APP_ENV=produdction
+export APP_ROLE=queue-worker
+EOF
+
 # Update the server
 yum -y update
 yum -y upgrade
@@ -161,10 +167,6 @@ sudo tee -a /etc/supervisor/supervisord.conf << EOF
 [include]
 files = /etc/supervisor/conf.d/*.conf
 EOF
-
-# Create the supervisor configuration file for the Laravel queue worker.
-sudo touch /var/log/queue-worker.log
-curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/laravel-worker.conf | sudo tee /etc/supervisor/conf.d/laravel-worker.conf
 
 # Create the supervisor startup script.
 curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/supervisord | sudo tee /etc/init.d/supervisord

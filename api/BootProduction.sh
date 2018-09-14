@@ -2,6 +2,12 @@
 
 set -e
 
+# Set the environment varis.
+sudo tee -a /home/ec2-user/.bash_profile << EOF
+export APP_ENV=produdction
+export APP_ROLE=api
+EOF
+
 # Update the server
 yum -y update
 yum -y upgrade

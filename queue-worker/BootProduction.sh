@@ -157,23 +157,14 @@ python get-pip.py
 pip install awscli --upgrade
 
 # Install supervisor.
-cd /tmp
-sudo pip install supervisor
+sudo easy_install supervisor
 
 # Create the supervisor configuration file.
 sudo mkdir -p /etc/supervisor/conf.d
 curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/supervisord.conf | sudo tee /etc/supervisor/supervisord.conf
 
-# Create the supervisor startup script.
-curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/supervisord | sudo tee /etc/init.d/supervisord
-sudo chmod a+x /etc/init.d/supervisord
-sudo kill $(pgrep supervisor) 2> /dev/null
-
-# Start supervisor.
-sudo service supervisord start
-
-# Add supervisor to autostart.
-sudo chkconfig --add supervisord
-sudo chkconfig supervisord on
+# Create supervisor log.
+sudo mkdir /var/log/supervisor
+sudo touch /var/log/supervisor/supervisord.log
 
 echo "Boot script complete"

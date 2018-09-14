@@ -163,6 +163,7 @@ files = /etc/supervisor/conf.d/*.conf
 EOF
 
 # Create the supervisor configuration file for the Laravel queue worker.
+sudo touch /var/log/queue-worker.log
 curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/laravel-worker.conf | sudo tee /etc/supervisor/conf.d/laravel-worker.conf
 
 # Create the supervisor startup script.

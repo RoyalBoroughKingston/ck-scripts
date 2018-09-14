@@ -159,7 +159,7 @@ echo_supervisord_conf | sudo tee /etc/supervisord.conf
 curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/laravel-worker.conf | sudo tee -a /etc/supervisord.conf
 
 # Set the startup script for supervisor.
-curl -O https://raw.githubusercontent.com/Supervisor/initscripts/master/redhat-init-equeffelec
+curl -o supervisord https://raw.githubusercontent.com/Supervisor/initscripts/master/redhat-init-equeffelec
 chmod 755 supervisord
 sudo chown root.root supervisord
 sudo mv supervisord /etc/init.d

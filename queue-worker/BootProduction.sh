@@ -161,7 +161,7 @@ cd /tmp
 sudo pip install supervisor
 
 # Create the supervisor configuration file.
-mkdir -p /etc/supervisor/conf.d
+sudo mkdir -p /etc/supervisor/conf.d
 echo_supervisord_conf | sudo tee /etc/supervisor/supervisord.conf
 sudo tee -a /etc/supervisor/supervisord.conf << EOF
 [include]

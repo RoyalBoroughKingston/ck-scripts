@@ -167,4 +167,7 @@ curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/qu
 sudo mkdir /var/log/supervisor
 sudo touch /var/log/supervisor/supervisord.log
 
+# Restart the supervisorctl.
+sudo supervisord -c /etc/supervisor/supervisord.conf
+
 echo "Boot script complete"

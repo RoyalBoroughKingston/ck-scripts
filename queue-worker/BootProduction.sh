@@ -162,11 +162,7 @@ sudo pip install supervisor
 
 # Create the supervisor configuration file.
 sudo mkdir -p /etc/supervisor/conf.d
-echo_supervisord_conf | sudo tee /etc/supervisor/supervisord.conf
-sudo tee -a /etc/supervisor/supervisord.conf << EOF
-[include]
-files = /etc/supervisor/conf.d/*.conf
-EOF
+curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/supervisord.conf | sudo tee /etc/supervisor/supervisord.conf
 
 # Create the supervisor startup script.
 curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/queue-worker/supervisord | sudo tee /etc/init.d/supervisord

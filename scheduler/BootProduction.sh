@@ -92,7 +92,9 @@ cat > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json << EOF
                 "collect_list": [
                     {
                         "file_path": "/var/www/html/storage/logs/laravel.log",
-                        "log_group_name": "laravel.log"
+                        "log_group_name": "laravel.log",
+                        "timestamp_format": "%Y-%m-%d %H:%M:%S",
+                        "multi_line_start_pattern": "{timestamp_format}"
                     }
                 ]
             }

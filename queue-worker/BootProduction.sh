@@ -11,7 +11,7 @@ EOF
 # Update the server
 yum -y update
 yum -y upgrade
-amazon-linux-extras install -y php7.2
+amazon-linux-extras install -y nginx1.12 php7.2
 yum install autoconf-2.69-11.amzn2.noarch automake-1.13.4-3.1.amzn2.noarch -y
 
 # Install AWS Agent
@@ -29,39 +29,29 @@ sudo ./install auto
 sudo service codedeploy-agent start
 cd /tmp
 
-# Install LAMP
+# Install PHP extensions
+yum install -y gd php-mbstring php-gd php-simplexml php-dom php-zip php-opcache
+
+# configure Nginx
 rm -Rf /var/www/html/public
 mkdir -p /var/www/html/public
-yum install -y httpd gd php-mbstring php-gd php-simplexml php-dom php-zip php-opcache
-systemctl enable httpd
-chkconfig httpd on
-usermod -a -G apache ec2-user
-chown -R ec2-user:apache /var/www
+echo "Nginx ready" > /var/www/html/public/index.php
+usermod -a -G nginx ec2-user
+chown -R ec2-user:nginx /var/www
 chmod 2775 /var/www
 find /var/www -type d -exec chmod 2775 {} \;
 find /var/www -type f -exec chmod 0664 {} \;
-#echo "<?php phpinfo(); ?>" > /var/www/html/public/index.php
+chkconfig nginx on
+service nginx start
 
-# Add in custom apache config
-cat > /etc/httpd/conf.d/custom.conf << EOF
-ServerSignature Off
-ServerTokens Prod
-ExtendedStatus On
-DocumentRoot /var/www/html/public
-<Directory /var/www/html/public>
-  AllowOverride All
-</Directory>
-<Location /server-status>
-    SetHandler server-status
-    Order deny,allow
-    Deny from all
-    Allow from localhost
-</Location>
-EOF
+# Add in custom PHP and Nginx config
+curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/api/www.conf | sudo tee /etc/php-fpm.d/www.conf
+curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/api/default.conf | sudo tee /etc/nginx/conf.d/default.conf
+curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/api/nginx.conf | sudo tee /etc/nginx/nginx.conf
 
-# Enable apache modules
-service httpd restart
-systemctl reload php-fpm
+# Restart the PHP and Nginx services
+service php-fpm reload
+service nginx reload
 
 # Install packages
 yum install -y git

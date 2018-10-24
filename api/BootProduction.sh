@@ -35,7 +35,7 @@ yum install -y gd php-mbstring php-gd php-simplexml php-dom php-zip php-opcache
 # configure Nginx
 rm -Rf /var/www/html/public
 mkdir -p /var/www/html/public
-echo "Nginx ready" > /var/www/html/index.php
+echo "Nginx ready" > /var/www/html/public/index.php
 usermod -a -G nginx ec2-user
 chown -R ec2-user:nginx /var/www
 chmod 2775 /var/www

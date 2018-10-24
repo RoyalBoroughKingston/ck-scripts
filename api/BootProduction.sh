@@ -49,7 +49,8 @@ curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/ap
 curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/api/default.conf | sudo tee /etc/nginx/conf.d/default.conf
 curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/api/nginx.conf | sudo tee /etc/nginx/nginx.conf
 
-# Enable apache modules
+# Restart the PHP and Nginx services
+service php-fpm reload
 service nginx reload
 
 # Install packages

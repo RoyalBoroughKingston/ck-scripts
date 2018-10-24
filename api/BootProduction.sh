@@ -11,7 +11,7 @@ EOF
 # Update the server
 yum -y update
 yum -y upgrade
-amazon-linux-extras install -y php7.2
+amazon-linux-extras install -y nginx1.12 php7.2
 yum install autoconf-2.69-11.amzn2.noarch automake-1.13.4-3.1.amzn2.noarch -y
 
 # Install AWS Agent

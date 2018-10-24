@@ -44,7 +44,8 @@ find /var/www -type f -exec chmod 0664 {} \;
 chkconfig nginx on
 service nginx start
 
-# Add in custom nginx config
+# Add in custom PHP and Nginx config
+curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/api/www.conf | sudo tee /etc/php-fpm.d/www.conf
 curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/api/default.conf | sudo tee /etc/nginx/conf.d/default.conf
 curl https://raw.githubusercontent.com/RoyalBoroughKingston/ck-scripts/master/api/nginx.conf | sudo tee /etc/nginx/nginx.conf
 

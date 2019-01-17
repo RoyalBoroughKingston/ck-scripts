@@ -20,15 +20,6 @@ wget https://d1wk0tztpsntt1.cloudfront.net/linux/latest/install
 sudo bash install
 /etc/init.d/awsagent start
 
-# Install CodeDeploy agent
-yum install wget ruby -y
-cd /home/ec2-user
-wget https://aws-codedeploy-eu-west-1.s3.amazonaws.com/latest/install
-chmod +x ./install
-sudo ./install auto
-sudo service codedeploy-agent start
-cd /tmp
-
 # Install PHP extensions
 yum install -y gd php-mbstring php-gd php-simplexml php-dom php-zip php-opcache
 
@@ -146,5 +137,15 @@ cd /tmp
 curl -O https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
 pip install awscli --upgrade
+
+
+# Install CodeDeploy agent
+yum install wget ruby -y
+cd /home/ec2-user
+wget https://aws-codedeploy-eu-west-1.s3.amazonaws.com/latest/install
+chmod +x ./install
+sudo ./install auto
+sudo service codedeploy-agent start
+cd /tmp
 
 echo "Boot script complete"
